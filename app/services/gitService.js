@@ -1,19 +1,20 @@
 var github = require('octonode');
 
-
 var api = {};
 
-
 api.repository = (req, res) => {
+    let git = req.body;
+    
+    let client = github.client();
 
-     var client = github.client();
-     
-     var ghrepo = client.repo('CaioMichelSantos/apiKeepi');
-     
-    ghrepo.contents('', "master", ( err , status , body , headers ) => {
-        console.log(status); 
+    var gitList = {};
 
+    let ghrepo = client.repo(git.nameAuthor + '/' + git.repository);
+     
+    ghrepo.contents('', git.branch, ( err , status , body , headers ) => {
+        res.json(status);
     });
+
 };
 
 module.exports = api;
